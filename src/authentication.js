@@ -2,15 +2,17 @@ var express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
+const env = require("dotenv");
 
-
-
-
-const uri = "mongodb+srv://authenticator:Realgoodpassword@cluster1.wjowqsk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
+ 
+env.config();
+const uri = process.env.connectionString;
+const database = process.env.database;
+const collection = process.env.collection;
 var cookieParser = require("cookie-parser");
 
 var app = express();
-let publicPath = path.join(__dirname,'public');
+let publicPath = path.join(__dirname,'../public');
 app.use(express.static(publicPath));
 console.log(publicPath);
 app.use(cookieParser());
@@ -26,8 +28,8 @@ app.get('/', function( req, res){
                
                 const user_ID = req.cookies.name;     
                 await client.connect();     
-                const db = client.db('Bookstore');     
-                const users = db.collection('Users');
+                const db = client.db(database);     
+                const users = db.collection(collection);
                 const query = { user_ID: user_ID};
                 console.log(query);
                 const user = await users.findOne(query);
