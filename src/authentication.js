@@ -59,12 +59,12 @@ app.get('/register', function(req,res){
 
 app.get('/showcookies', function(req,res){
     var greeting = "Hey there here is the active cookies: ";
-    res.send( greeting + req.cookies.name + "<br><br><br><br> <a href='/'>login</a>");
+    res.send( greeting + req.cookies.name + "<br><br><br><br> <a href='/'>login</a><br> <a href='/clearcookies'>clearcookies</a>");
 });
 app.get('/clearcookies', function(req, res) {
     const cookieName = 'name'; // Replace 'your_cookie_name' with the actual name of your cookie
     res.clearCookie(cookieName);
-    res.send("All Cookies were deleted <a href='/'>login</a>");
+    res.send("All Cookies were deleted <a href='/'>login</a><br><a href='/showcookies'>showcookies</a>");
 });
 
 
